@@ -31,16 +31,17 @@ resource "aws_security_group" "Project-SG" {
 
 
 resource "aws_instance" "web" {
-  ami                    = "ami-001f2488b35ca8aad"
+  ami                    = "ami-084568db4383264d4"
   instance_type          = "t2.large"
-  key_name               = "Kastro"
+  key_name               = "sample-key"
   vpc_security_group_ids = [aws_security_group.Project-SG.id]
   user_data              = templatefile("./resource.sh", {})
 
   tags = {
-    Name = "Kastro"
+    Name = "swiggy-server"
   }
   root_block_device {
     volume_size = 30
   }
+  depends_on = [aws_security_group.Project-SG]
 }
